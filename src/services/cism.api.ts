@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const cism = axios.create({
-    baseURL: process.env.VUE_APP_CISM_SERVER_API
+    baseURL: process.env.VUE_APP_CISM_SERVER
 });
 
 cism.interceptors.request.use(config=>{
