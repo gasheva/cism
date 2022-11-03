@@ -1,9 +1,7 @@
-import {Action, createStore} from 'vuex';
+import {createStore} from 'vuex';
 import cism from '@/services/cism.api';
 import {User} from '@/interfaces/user';
 import {ActionContext} from 'vuex';
-
-const LS_TOKEN_FIELD_NAME = 'cism_token';
 
 interface RequestCallback {
     callback: Function,
@@ -13,27 +11,29 @@ interface RequestCallback {
 interface State {
     user: User | undefined,
     isRequestProcess: boolean,
+    token: string | null,
 }
 
 export default createStore({
     state: {
         user: undefined,
         isRequestProcess: false,
+        token: null,
     } as State,
 
     getters: {
-        isAuth: (_: State, getters: any) => Boolean(getters.getToken?.length),
-        getToken: () => localStorage.getItem(LS_TOKEN_FIELD_NAME),
+        isAuth: (state) => Boolean(state.token?.length),
+        getToken: (state) => state.token,
         getIsRequestProcess: state => state.isRequestProcess,
         getUser: state => state.user,
     },
 
     mutations: {
         setToken(state: State, token: string) {
-            localStorage.setItem(LS_TOKEN_FIELD_NAME, token);
+            state.token = token;
         },
-        clearToken() {
-            localStorage.removeItem(LS_TOKEN_FIELD_NAME);
+        clearToken(state: State) {
+            state.token = null;
         },
         setIsRequestProcess(state: State, isRequestProcess: boolean) {
             state.isRequestProcess = isRequestProcess;
@@ -60,9 +60,9 @@ export default createStore({
 
         async requestWrapper(context: ActionContext<State, State>, callback: RequestCallback): Promise<any> {
             context.commit('setIsRequestProcess', true);
-            try{
+            try {
                 return await callback.callback(callback.params);
-            } catch(error){
+            } catch (error) {
                 return error;
             } finally {
                 context.commit('setIsRequestProcess', false);
