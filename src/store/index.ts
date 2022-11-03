@@ -25,6 +25,7 @@ export default createStore({
         isAuth: (_: State, getters: any) => Boolean(getters.getToken?.length),
         getToken: () => localStorage.getItem(LS_TOKEN_FIELD_NAME),
         getIsRequestProcess: state => state.isRequestProcess,
+        getUser: state => state.user,
     },
 
     mutations: {
@@ -49,7 +50,8 @@ export default createStore({
                 commit('setUser', _credits);
                 commit('setToken', resp.data.token);
             };
-            await dispatch('requestWrapper', {callback: login, params: credits});
+
+            return await dispatch('requestWrapper', {callback: login, params: credits});
         },
 
         logout({commit}: { commit: Function }): void {
@@ -58,9 +60,13 @@ export default createStore({
 
         async requestWrapper(context: ActionContext<State, State>, callback: RequestCallback): Promise<any> {
             context.commit('setIsRequestProcess', true);
-            const res = await callback.callback(callback.params);
-            context.commit('setIsRequestProcess', false);
-            return res;
+            try{
+                return await callback.callback(callback.params);
+            } catch(error){
+                return error;
+            } finally {
+                context.commit('setIsRequestProcess', false);
+            }
         }
     },
 });
