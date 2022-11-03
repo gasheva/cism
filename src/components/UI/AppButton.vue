@@ -10,11 +10,12 @@ export default {
 <script lang="ts" setup>
 const props = defineProps({
     label: {type: String, default: ''},
+    isDisabled: {type: Boolean, default: false},
 });
 
 const emit = defineEmits(['click']);
 
-const click = () => emit('click');
+const click = () => !props.isDisabled && emit('click');
 </script>
 
 <style lang="scss" scoped>
