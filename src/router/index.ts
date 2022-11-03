@@ -25,8 +25,8 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (!to.name) return;
-  if (to.name === 'sign' && store.getters['auth/isAuth']) return {name: 'home'};
-  if (to.name !== 'sign' && !store.getters['auth/isAuth']) return {name: 'sign'};
+  if (to.name === 'sign' && store.getters['isAuth']) return {name: 'home'};
+  if (to.name !== 'sign' && !store.getters['isAuth']) return {name: 'sign'};
 });
 
 
