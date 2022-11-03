@@ -1,6 +1,6 @@
 <template>
     <form @click.prevent class="sign-form">
-        <h2 class="sign-form_header">авторизация</h2>
+        <h2 class="sign-form_header logo">авторизация</h2>
         <app-input class="sign-form_input" label="email" type="email" v-model:value="email"/>
         <app-input class="sign-form_input" label="пароль" type="password" v-model:value="password"/>
         <span class="sign-form_error">{{ error }}</span>
@@ -45,10 +45,6 @@ const sign = async () => {
 
   &_header {
     margin-bottom: 38px;
-    font-weight: 600;
-    font-size: $font-bg;
-    line-height: 140%;
-    text-transform: uppercase;
   }
 
   &_input {

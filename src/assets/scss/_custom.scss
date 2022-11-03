@@ -13,3 +13,10 @@ body {
   overflow-x: hidden;
   height: 100vh;
 }
+
+.logo {
+  font-weight: 600;
+  font-size: $font-bg;
+  line-height: 140%;
+  text-transform: uppercase;
+}
