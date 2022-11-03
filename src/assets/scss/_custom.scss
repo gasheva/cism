@@ -2,3 +2,14 @@
   font-family: $montserrat;
   font-size: $font-md;
 }
+
+#app {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overflow: auto;
+  overflow-x: hidden;
+  height: 100vh;
+}
