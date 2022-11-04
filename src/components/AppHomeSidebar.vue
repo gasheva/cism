@@ -67,7 +67,7 @@ const updateSearch = debounce((val: string): void => {
 }, DEBOUNCE_TIMEOUT_MS);
 
 const selectDocument = (doc: Document): void => {
-    selectedDocumentDisplayed.value = doc;
+    if (isRequestProcess) selectedDocumentDisplayed.value = doc;
 };
 
 </script>

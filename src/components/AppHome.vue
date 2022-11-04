@@ -27,10 +27,11 @@ const selectedDocument = ref<Document | null>(null);
 const search = ref<string>('');
 
 
-const updateSearch = (val: string)=>{
+const updateSearch = async (val: string)=>{
     search.value = val;
+    await fetchDocuments(search.value);
     selectedDocument.value = null;
-    fetchDocuments(search.value);
+
 }
 
 const fetchDocuments = async (search?: string): Promise<void> => {
