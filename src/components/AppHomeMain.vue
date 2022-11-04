@@ -21,7 +21,7 @@
             </div>
         </div>
         <div v-show="!doc && !isRequestProcess" class="home-main__empty">
-            <span>Выберите документ, чтобы посмотреть его содержиое</span>
+            <span>{{ text }}</span>
         </div>
         <div v-show="isRequestProcess" class="home-main__empty">
             <app-spinner/>
@@ -44,6 +44,7 @@ const store = useStore();
 
 const props = defineProps({
     doc: {type: Object as () => (Document | null), default: () => null},
+    text: {type: String, default: ''},
 });
 
 const isRequestProcess = computed(() => {

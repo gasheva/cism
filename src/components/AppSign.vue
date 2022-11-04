@@ -30,6 +30,7 @@ import {computed, ref, unref, watch} from 'vue';
 import AppButton from '@/components/UI/AppButton.vue';
 import {useRouter} from 'vue-router';
 import AppSpinner from '@/components/UI/AppSpinner.vue';
+import {RejectedRequest} from '@/interfaces/rejectedRequest';
 
 const store = useStore();
 const router = useRouter();
@@ -53,8 +54,7 @@ watch([email, password], () => {
 
 
 const sign = async () => {
-    // const mockUser = {email: 'test@test.com', password: '1234567'};
-    const res = await store.dispatch('login', {email: unref(email), password: unref(password)});
+    const res: RejectedRequest | undefined = await store.dispatch('login', {email: unref(email), password: unref(password)});
     if (res?.failed) {
         error.value = res.error;
         emailValid.value = passwordValid.value = false;

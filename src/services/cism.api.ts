@@ -1,5 +1,6 @@
 import axios from 'axios';
 import store from '@/store';
+import {RejectedRequest} from '@/interfaces/rejectedRequest';
 
 const cism = axios.create({
     baseURL: process.env.VUE_APP_CISM_SERVER
@@ -13,7 +14,7 @@ cism.interceptors.request.use(config => {
 
 cism.interceptors.response.use(config => config, error => {
     const errorMsg = error.response?.data?.message || error.message;
-    return Promise.reject({error: errorMsg, failed: true, code: error.code});
+    return Promise.reject({error: errorMsg, failed: true, code: error.code} as RejectedRequest);
 });
 
 export default cism;

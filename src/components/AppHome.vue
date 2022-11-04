@@ -5,7 +5,7 @@
                           :search="search"
                           @update:search="updateSearch"
         />
-        <app-home-main :doc="selectedDocument"/>
+        <app-home-main :doc="selectedDocument" :text="textDisplayed"/>
     </div>
 </template>
 
@@ -19,13 +19,16 @@ import AppHomeSidebar from '@/components/AppHomeSidebar.vue';
 import AppHomeMain from '@/components/AppHomeMain.vue';
 import {onBeforeMount, ref} from 'vue';
 import {useStore} from 'vuex';
+import {RejectedRequest} from '@/interfaces/rejectedRequest';
+
+const TEXT_DISPLAYED_DEFAULT = 'Выберите документ, чтобы посмотреть его содержиое';
 
 const store = useStore();
 
 const documents = ref<Document[]>([]);
 const selectedDocument = ref<Document | null>(null);
 const search = ref<string>('');
-// const error = ref<string>('')
+const textDisplayed = ref<string>(TEXT_DISPLAYED_DEFAULT);
 
 const updateSearch = async (val: string) => {
     search.value = val;
@@ -34,12 +37,12 @@ const updateSearch = async (val: string) => {
 };
 
 const fetchDocuments = async (search?: string): Promise<void> => {
-    const resp = await store.dispatch('fetchDocuments', search ? {search: search} : {});
-    if (resp?.failed) {
-
+    const resp: RejectedRequest | Document[] = await store.dispatch('fetchDocuments', search ? {search: search} : {});
+    if ((<RejectedRequest>resp)?.failed) {
+        textDisplayed.value = (<RejectedRequest>resp).error;
         return;
     }
-    documents.value = resp;
+    documents.value = <Document[]>resp;
 };
 
 onBeforeMount(() => {
