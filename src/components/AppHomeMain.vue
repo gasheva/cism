@@ -67,7 +67,7 @@ const props = defineProps({
 
       &_buttons {
         display: flex;
-        gap: 10px; // TODO(?)
+        gap: 10px;
 
         & > button {
           width: 114px;
