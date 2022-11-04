@@ -61,7 +61,7 @@ export default createStore({
         async requestWrapper(context: ActionContext<State, State>, callback: RequestCallback): Promise<any> {
             context.commit('setIsRequestProcess', true);
             try {
-                await callback.callback(callback.params);
+                return await callback.callback(callback.params);
             } catch (error) {
                 return error;
             } finally {
