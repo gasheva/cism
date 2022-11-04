@@ -2,8 +2,8 @@
     <div class="home">
         <app-home-sidebar :documents="documents"
                           v-model:selected-document="selectedDocument"
-                          v-model:search="search"
-                          @filter="filterDocuments"
+                          :search="search"
+                          @update:search="updateSearch"
         />
         <app-home-main :doc="selectedDocument"/>
     </div>
@@ -26,12 +26,15 @@ const documents = ref<Document[]>([]);
 const selectedDocument = ref<Document | null>(null);
 const search = ref<string>('');
 
-const filterDocuments = (search: string): void => {
-    store.dispatch('fetchDocuments', {search});
-};
 
-const fetchDocuments = async () => {
-    const resp = await store.dispatch('fetchDocuments', search.value ? {search: search.value} : {});
+const updateSearch = (val: string)=>{
+    search.value = val;
+    selectedDocument.value = null;
+    fetchDocuments(search.value);
+}
+
+const fetchDocuments = async (search?: string): Promise<void> => {
+    const resp = await store.dispatch('fetchDocuments', search ? {search: search} : {});
     if (resp?.failed) {
         return;
     }

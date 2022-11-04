@@ -2,7 +2,10 @@
     <div class="sidebar">
         <div class="sidebar_search">
             <h3>Поиск документа</h3>
-            <app-input :value="search" placeholder="Введите ID документа" @update:value="updateSearch"/>
+            <app-input :value="searchDisplayed"
+                       :is-disabled="isRequestProcess"
+                       @update:value="updateSearch"
+                       placeholder="Введите ID документа"/>
 
         </div>
         <div class="sidebar_results">
@@ -25,9 +28,14 @@ export default {
 <script setup lang="ts">
 import AppInput from '@/components/UI/AppInput.vue';
 import DocumentCard from '@/components/UI/DocumentCard.vue';
-import {useDebounce} from '@/composable/useDebounce';
 import {computed, defineProps, ref} from 'vue';
 import {Document} from '@/interfaces/document';
+import {DEBOUNCE_TIMEOUT_MS} from '@/constants/constants';
+import {useStore} from 'vuex';
+
+const debounce = require('lodash.debounce');
+
+const store = useStore();
 
 const props = defineProps({
     documents: {type: Array as () => Document[], default: () => []},
@@ -39,17 +47,24 @@ const props = defineProps({
 
 const emit = defineEmits<{
     (e: 'update:selectedDocument', doc: Document): void,
+    (e: 'update:search', search: string): void,
 }>();
-const search = ref<string>('');
+
+const searchDisplayed = ref<string>('');
+
+const isRequestProcess = computed(() => {
+    return store.getters.getIsRequestProcess;
+});
 
 const selectedDocumentDisplayed = computed({
     get: (): Document | null => props.selectedDocument,
     set: (doc: Document | null): void => emit('update:selectedDocument', doc!),
 });
 
-const {debouncedFunction: updateSearch} = useDebounce((val: string) => {
-    search.value = val;
-});
+const updateSearch = debounce((val: string): void => {
+    searchDisplayed.value = val;
+    emit('update:search', val);
+}, DEBOUNCE_TIMEOUT_MS);
 
 const selectDocument = (doc: Document): void => {
     selectedDocumentDisplayed.value = doc;
@@ -73,7 +88,8 @@ const selectDocument = (doc: Document): void => {
     max-height: 100%;
     padding-bottom: 120px;
   }
-  &_documents{
+
+  &_documents {
     display: flex;
     flex-direction: column;
     gap: 18px;
