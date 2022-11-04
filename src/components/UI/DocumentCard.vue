@@ -1,12 +1,13 @@
 <template>
     <div class="doc-card" :class="{'doc-card__active': isActive}" @click="click">
         <div class="doc-card_image card-image" :class="{'doc-card_image__active': isActive}">
-            <img class="image-cover" :src="doc.image" alt="">
+            <img class="image-cover" :src="doc.image || defaultImage" alt="">
         </div>
         <div class="doc-card_info">
             <div class="doc-card_title"
                  :class="{'doc-card_title__active': isActive}">
-                {{ doc.name }}</div>
+                {{ doc.name }}
+            </div>
             <!--            <div class="text-secondary">{{doc.size}}</div>-->
         </div>
     </div>
@@ -25,6 +26,8 @@ const props = defineProps({
 const emit = defineEmits<{
     (e: 'click'): void
 }>();
+
+const defaultImage =  require('../../assets/img/no-image-424x286.png');
 
 const click = () => emit('click');
 
@@ -47,7 +50,8 @@ const click = () => emit('click');
 
   &_image {
     border-right: 1px solid #E0E0E0;
-    &__active{
+
+    &__active {
       border-right-color: $blue-500;
     }
   }
@@ -67,7 +71,7 @@ const click = () => emit('click');
     line-height: 17px;
     color: $dark;
 
-    &__active{
+    &__active {
       color: $light;
     }
   }

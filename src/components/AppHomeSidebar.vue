@@ -76,11 +76,12 @@ const selectDocument = (doc: Document): void => {
 .sidebar {
   width: 282px;
   min-width: 282px;
-  padding: 27px 0 60px 20px;
+  padding: 27px 0 60px 0px;
 
   &_search {
     margin-bottom: 29px;
     padding-right: $sidebar-right-padding;
+    padding-left: $sidebar-left-padding;
   }
 
   &_results {
@@ -95,13 +96,12 @@ const selectDocument = (doc: Document): void => {
     flex-direction: column;
     gap: 18px;
     max-height: 100%;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-right: $sidebar-right-padding;
+    padding: 5px $sidebar-right-padding 5px $sidebar-left-padding;
   }
 
   .results {
     &_title {
+      padding-left: $sidebar-left-padding;
       margin-bottom: 13px;
     }
   }

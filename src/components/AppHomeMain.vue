@@ -2,7 +2,7 @@
     <div class="home-main">
         <div v-if="doc && !isRequestProcess" class="home-card">
             <div class="home-card_image card-image">
-                <img class="card-image_image image-cover" :src="doc.image" alt="">
+                <img class="card-image_image image-cover" :src="doc.image || defaultImage" alt="">
             </div>
             <div class="home-card_info">
                 <div class="home-card_tools tools">
@@ -46,6 +46,8 @@ const props = defineProps({
     doc: {type: Object as () => (Document | null), default: () => null},
     text: {type: String, default: ''},
 });
+
+const defaultImage =  require('../assets/img/no-image-424x286.png');
 
 const isRequestProcess = computed(() => {
     return store.getters.getIsRequestProcess;
