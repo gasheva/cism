@@ -67,6 +67,18 @@ export default createStore({
             } finally {
                 context.commit('setIsRequestProcess', false);
             }
+        },
+
+        async fetchDocuments({dispatch}: ActionContext<State, State>, payload: { search?: string }) {
+            let params: { search: string } | {} = {};
+            if (payload?.search) params = {search: payload.search};
+            const fetch = async () => {
+                const resp = await cism.get('/user/docs', {params});
+                debugger;
+                return resp.data;
+            };
+
+            return await dispatch('requestWrapper', {callback: fetch, params: {}});
         }
     },
 });
