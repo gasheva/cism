@@ -1,10 +1,13 @@
 import axios from 'axios';
+import store from '@/store';
 
 const cism = axios.create({
     baseURL: process.env.VUE_APP_CISM_SERVER
 });
 
 cism.interceptors.request.use(config => {
+    const token = store.getters.getToken;
+    if (config.headers) config.headers.token = token ? token : '';
     return config;
 });
 
