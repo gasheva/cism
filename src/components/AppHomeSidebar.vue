@@ -8,8 +8,8 @@
                        placeholder="Введите ID документа"/>
 
         </div>
-        <div class="sidebar_results">
-            <h3>Результаты</h3>
+        <div class="sidebar_results results">
+            <h3 class="results_title">Результаты</h3>
             <div class="sidebar_documents  scrollbar-y scrollbar-y__hidden">
                 <document-card v-for="doc in documents"
                                :doc="doc"
@@ -75,16 +75,16 @@ const selectDocument = (doc: Document): void => {
 <style lang="scss" scoped>
 .sidebar {
   width: 282px;
-  padding: 27px 22px 60px 20px;
+  padding: 27px 0 60px 20px;
 
   &_search {
     margin-bottom: 29px;
+    padding-right: $sidebar-right-padding;
   }
 
   &_results {
     display: flex;
     flex-direction: column;
-    gap: 18px;
     max-height: 100%;
     padding-bottom: 120px;
   }
@@ -94,6 +94,15 @@ const selectDocument = (doc: Document): void => {
     flex-direction: column;
     gap: 18px;
     max-height: 100%;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: $sidebar-right-padding;
+  }
+
+  .results {
+    &_title {
+      margin-bottom: 13px;
+    }
   }
 }
 </style>

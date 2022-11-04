@@ -48,4 +48,15 @@ h3 {
 
 .scrollbar-y__hidden::-webkit-scrollbar {
   display: none;
+  width: 0;
+  background: transparent;
+}
+
+.scrollbar-y__hidden::-webkit-scrollbar-track {
+  -webkit-box-shadow: none;
+}
+
+.scrollbar-y__hidden::-webkit-scrollbar-thumb {
+  background: transparent;
+  -webkit-box-shadow: none;
 }
