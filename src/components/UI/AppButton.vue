@@ -1,5 +1,7 @@
 <template>
-    <button class="button" @click="click">{{ label }}</button>
+    <button class="button"
+            :class="[ bold?'button__bold':'', `button__${buttonType}`]"
+            @click="click">{{ label }}</button>
 </template>
 
 <script lang="ts">
@@ -11,6 +13,14 @@ export default {
 const props = defineProps({
     label: {type: String, default: ''},
     isDisabled: {type: Boolean, default: false},
+    bold: {type: Boolean, default: false},
+    buttonType: {
+        type: String, default: 'info',
+        validator: (val: string) => {
+            const values = new Set(['info', 'danger']);
+            return values.has(val);
+        }
+    }
 });
 
 const emit = defineEmits(['click']);
@@ -21,15 +31,23 @@ const click = () => !props.isDisabled && emit('click');
 <style lang="scss" scoped>
 .button {
   width: 100%;
-  padding: 20px 32px;
   border: 1px solid #0D6EFD;
   border-radius: 8px;
 
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   color: $blue-500;
   text-transform: capitalize;
+
+  &__bold {
+    font-weight: 700;
+  }
+
+  &__danger{
+    border-color: $danger;
+    color: $danger;
+  }
 }
 </style>
