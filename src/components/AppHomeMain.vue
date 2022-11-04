@@ -1,6 +1,6 @@
 <template>
     <div class="home-main">
-        <div v-if="doc" class="home-card">
+        <div v-if="doc && !isRequestProcess" class="home-card">
             <div class="home-card_image card-image">
                 <img class="card-image_image image-cover" :src="doc.image" alt="">
             </div>
@@ -20,8 +20,11 @@
                 </div>
             </div>
         </div>
-        <div v-show="!doc" class="home-main__empty">
+        <div v-show="!doc && !isRequestProcess" class="home-main__empty">
             <span>Выберите документ, чтобы посмотреть его содержиое</span>
+        </div>
+        <div v-show="isRequestProcess" class="home-main__empty">
+            <app-spinner/>
         </div>
     </div>
 </template>
@@ -32,11 +35,19 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import {defineProps} from 'vue';
+import {computed, defineProps} from 'vue';
 import AppButton from '@/components/UI/AppButton.vue';
+import {useStore} from 'vuex';
+import AppSpinner from '@/components/UI/AppSpinner.vue';
+
+const store = useStore();
 
 const props = defineProps({
     doc: {type: Object as () => (Document | null), default: () => null},
+});
+
+const isRequestProcess = computed(() => {
+    return store.getters.getIsRequestProcess;
 });
 
 </script>

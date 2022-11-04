@@ -25,18 +25,18 @@ const store = useStore();
 const documents = ref<Document[]>([]);
 const selectedDocument = ref<Document | null>(null);
 const search = ref<string>('');
+// const error = ref<string>('')
 
-
-const updateSearch = async (val: string)=>{
+const updateSearch = async (val: string) => {
     search.value = val;
-    await fetchDocuments(search.value);
     selectedDocument.value = null;
-
-}
+    await fetchDocuments(search.value);
+};
 
 const fetchDocuments = async (search?: string): Promise<void> => {
     const resp = await store.dispatch('fetchDocuments', search ? {search: search} : {});
     if (resp?.failed) {
+
         return;
     }
     documents.value = resp;
