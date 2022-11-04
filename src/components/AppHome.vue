@@ -49,5 +49,7 @@ onBeforeMount(() => {
 .home {
   @include form-border;
   display: flex;
+  height: 575px;
+  overflow: hidden;
 }
 </style>

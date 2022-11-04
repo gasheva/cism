@@ -7,10 +7,12 @@
         </div>
         <div class="sidebar_results">
             <h3>Результаты</h3>
-            <document-card v-for="doc in documents"
-                           :doc="doc"
-                           :is-active="doc.id===selectedDocumentDisplayed?.id"
-                           @click="selectDocument(doc)"/>
+            <div class="sidebar_documents  scrollbar-y scrollbar-y__hidden">
+                <document-card v-for="doc in documents"
+                               :doc="doc"
+                               :is-active="doc.id===selectedDocumentDisplayed?.id"
+                               @click="selectDocument(doc)"/>
+            </div>
         </div>
     </div>
 </template>
@@ -68,6 +70,14 @@ const selectDocument = (doc: Document): void => {
     display: flex;
     flex-direction: column;
     gap: 18px;
+    max-height: 100%;
+    padding-bottom: 120px;
+  }
+  &_documents{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-height: 100%;
   }
 }
 </style>

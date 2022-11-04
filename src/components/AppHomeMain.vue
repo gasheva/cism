@@ -20,6 +20,9 @@
                 </div>
             </div>
         </div>
+        <div v-show="!doc" class="home-main__empty">
+            <span>Выберите документ, чтобы посмотреть его содержиое</span>
+        </div>
     </div>
 </template>
 
@@ -33,16 +36,25 @@ import {defineProps} from 'vue';
 import AppButton from '@/components/UI/AppButton.vue';
 
 const props = defineProps({
-    doc: {type: Object as () => Document, default: () => null},
+    doc: {type: Object as () => (Document | null), default: () => null},
 });
 
 </script>
 
 <style lang="scss" scoped>
 .home-main {
+  width: 100%;
+  height: 100%;
   padding: 30px;
   border-left: 1px solid #E0E0E0;
 
+  &__empty{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .home-card {
     display: flex;
 

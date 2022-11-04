@@ -40,3 +40,12 @@ h3 {
   line-height: 140%;
   margin-bottom: 14px;
 }
+
+.scrollbar-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.scrollbar-y__hidden::-webkit-scrollbar {
+  display: none;
+}
