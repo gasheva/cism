@@ -12,6 +12,7 @@
         <span class="sign-form_error">{{ error }}</span>
         <app-button class="sign-form_button" type="submit" label="войти"
                     :is-disabled="isRequestProcess"
+                    bold
                     @click="sign">sign
         </app-button>
     </form>
@@ -92,6 +93,7 @@ const sign = async () => {
   }
 
   &_button {
+    height: 50px;
     margin-top: 36px;
   }
 }

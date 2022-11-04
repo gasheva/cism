@@ -26,9 +26,15 @@ const userName = store.getters.getUser.email;
 
 <style lang="scss" scoped>
 .home-page {
+  max-width: 1266px;
+  margin: auto;
+  margin-top: 41px;
+
   &_header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
   }
 }
 </style>

@@ -74,7 +74,6 @@ export default createStore({
             if (payload?.search) params = {search: payload.search};
             const fetch = async () => {
                 const resp = await cism.get('/user/docs', {params});
-                debugger;
                 return resp.data;
             };
 
