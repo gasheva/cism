@@ -68,8 +68,16 @@ const valueDisplayed = computed({
     line-height: 17px;
     color: $secondary;
 
+    &:focus {
+      box-shadow: inset 0 0 3px 0 $blue-500;
+    }
+
     &__invalid {
       border-color: $danger;
+
+      &:focus {
+        box-shadow: inset 0 0 3px 0 $danger;
+      }
     }
   }
 }

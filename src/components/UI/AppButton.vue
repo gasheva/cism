@@ -41,6 +41,11 @@ const click = () => !props.isDisabled && emit('click');
   color: $blue-500;
   text-transform: capitalize;
 
+  &:hover{
+    background: #0D6EFD;
+    color: white;
+  }
+
   &__bold {
     font-weight: 700;
   }
@@ -48,6 +53,11 @@ const click = () => !props.isDisabled && emit('click');
   &__danger{
     border-color: $danger;
     color: $danger;
+
+    &:hover{
+      background: $danger;
+      color: white;
+    }
   }
 }
 </style>
