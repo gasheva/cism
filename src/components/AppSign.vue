@@ -10,11 +10,11 @@
                    :is-disabled="isRequestProcess"
                    v-model:value="password"/>
         <span class="sign-form_error">{{ error }}</span>
-        <app-button class="sign-form_button" type="submit" label="войти"
+        <app-button v-show="!isRequestProcess" class="sign-form_button" type="submit" label="войти"
                     :is-disabled="isRequestProcess"
                     bold
-                    @click="sign">sign
-        </app-button>
+                    @click="sign"/>
+        <app-spinner class="sign-form_spinner" v-show="isRequestProcess"/>
     </form>
 </template>
 
@@ -29,6 +29,7 @@ import AppInput from '@/components/UI/AppInput.vue';
 import {computed, ref, unref, watch} from 'vue';
 import AppButton from '@/components/UI/AppButton.vue';
 import {useRouter} from 'vue-router';
+import AppSpinner from '@/components/UI/AppSpinner.vue';
 
 const store = useStore();
 const router = useRouter();
@@ -53,7 +54,7 @@ watch([email, password], () => {
 
 const sign = async () => {
     // const mockUser = {email: 'test@test.com', password: '1234567'};
-    const res = await store.dispatch('login', {email:unref(email), password:unref(password)});
+    const res = await store.dispatch('login', {email: unref(email), password: unref(password)});
     if (res?.failed) {
         error.value = res.error;
         emailValid.value = passwordValid.value = false;
@@ -95,6 +96,10 @@ const sign = async () => {
   &_button {
     height: 50px;
     margin-top: 36px;
+  }
+
+  &_spinner {
+    margin: auto;
   }
 }
 </style>
