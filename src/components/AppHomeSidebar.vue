@@ -75,6 +75,7 @@ const selectDocument = (doc: Document): void => {
 <style lang="scss" scoped>
 .sidebar {
   width: 282px;
+  min-width: 282px;
   padding: 27px 0 60px 20px;
 
   &_search {
